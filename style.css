@@ -1,0 +1,783 @@
+/* --- Fuente principal Fredoka --- */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
+
+/* --- Estilos Generales --- */
+body {
+    margin: 0;
+    font-family: 'Fredoka', 'Comic Sans MS', sans-serif;
+    color: #4A3112;
+    line-height: 1.4;
+}
+
+/* --- Contenedor Principal del Chat --- */
+.chat-container {
+    background-color: #FFF4DE;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* --- Cabecera --- */
+.chat-header {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: none;
+    flex-shrink: 0;
+}
+
+.chat-header button {
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    box-shadow: none;
+}
+
+.button-refresh {
+    background-color: #FFFFFF;
+    color: #94AB3D;
+    font-size: 1.4em;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+.button-panel {
+    background-color: #FFFFFF;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Icono de 3 barras SÓLO para el botón de ABRIR panel */
+.chat-header>.button-panel:not(#close-panel-btn)::before,
+.chat-header>.button-panel:not(#close-panel-btn)::after,
+.chat-header>.button-panel:not(#close-panel-btn) .panel-bar-middle {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 3px;
+    background-color: black;
+    border-radius: 1px;
+}
+
+.chat-header>.button-panel:not(#close-panel-btn)::before {
+    background-color: #94AB3D;
+    top: 11px;
+}
+
+.chat-header>.button-panel:not(#close-panel-btn)::after {
+    background-color: #F6EB9C;
+    bottom: 11px;
+}
+
+.chat-header>.button-panel:not(#close-panel-btn) .panel-bar-middle {
+    background-color: #FA77C5;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* --- Área de Mensajes --- */
+.chat-messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Estilos Base Mensaje --- */
+.message {
+    display: flex;
+    align-items: flex-end;
+    max-width: 85%;
+    position: relative;
+    margin-bottom: 18px;
+}
+
+.message:last-child {
+    margin-bottom: 0;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background-color: #eee;
+    border: none;
+    /* Borde quitado como solicitaste */
+    object-fit: cover;
+    /* Ajuste imagen */
+}
+
+/* Burbuja Amarilla (Bot) */
+.message.received {
+    align-self: flex-start;
+}
+
+.message.received .avatar.bot-avatar {
+    margin-right: 12px;
+}
+
+.message.received .message-bubble {
+    background-color: #F5E187;
+    padding: 12px 18px;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    color: #4A3112;
+}
+
+/* Burbuja Verde (Usuario) */
+.message.sent {
+    align-self: flex-end;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.message.sent .avatar.user-avatar {
+    margin-left: 12px;
+}
+
+.message.sent .message-bubble {
+    background-color: #94AB3D;
+    /* Verde */
+    color: #FFFFFF;
+    /* Color por defecto */
+    border-radius: 20px;
+    /* Redondeo estándar */
+    padding: 8px;
+    /* Padding reducido */
+    display: inline-block;
+    max-width: 100%;
+    box-sizing: border-box;
+    box-shadow: none;
+}
+
+/* Contenido Párrafos */
+.message-bubble p {
+    margin: 0 0 10px 0;
+    line-height: 1.4;
+}
+
+.message-bubble p:last-child {
+    margin-bottom: 0;
+}
+
+/* --- Botones en Burbujas --- */
+.message-buttons,
+.navigation-buttons {
+    display: flex;
+    margin-top: 10px;
+}
+
+.message-buttons {
+    flex-direction: column;
+    gap: 10px;
+}
+
+.navigation-buttons {
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* Estilo Botón Blanco (para Bot y para diseño en User) */
+.message-buttons button,
+.message.received .message-bubble .btn-action,
+.message.sent .message-bubble .choice-button {
+    background-color: #FFFFFF;
+    color: #4A3112;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 25px;
+    font-family: inherit;
+    font-weight: bold;
+    text-align: center;
+    display: inline-block;
+    margin: 0;
+    box-shadow: 0 1px 3px rgba(74, 49, 18, 0.1);
+}
+
+/* Estilos específicos para botones FUNCIONALES (los del Bot) */
+.message-buttons button,
+.message.received .message-bubble .btn-action {
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    margin-top: 5px;
+}
+
+.message-buttons button:hover,
+.message.received .message-bubble .btn-action:hover {
+    background-color: #FDF9E0;
+    box-shadow: 0 2px 5px rgba(74, 49, 18, 0.15);
+}
+
+/* Estilos específicos para botón de DISEÑO (dentro burbuja User) */
+.message.sent .message-bubble .choice-button {
+    cursor: default;
+    box-shadow: none;
+}
+
+
+/* --- Área de Input --- */
+.chat-input-area {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background-color: #94AB3D;
+    flex-shrink: 0;
+}
+
+.text-input {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    margin-right: 10px;
+    font-family: inherit;
+    font-size: 1em;
+    outline: none;
+    background-color: #FFFFFF;
+    color: #4A3112;
+}
+
+.text-input::placeholder {
+    color: #4A3112;
+    opacity: 0.6;
+}
+
+.send-button {
+    background-color: #FA77C5;
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    transition: background-color 0.2s ease;
+}
+
+.send-button:hover {
+    background-color: #f750b6;
+}
+
+/* --- Botones Navegación Tips (con Font Awesome) --- */
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: #fed8c6;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    margin-top: 10px;
+    border-radius: 50%;
+    color: #FA77C5;
+    font-size: 1.2em;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-nav:hover:not(:disabled) {
+    background-color: rgba(250, 119, 197, 0.1);
+    color: #e057a8;
+}
+
+.btn-nav:disabled {
+    color: #cccccc !important;
+    cursor: not-allowed;
+    background-color: transparent !important;
+    opacity: 0.5;
+}
+
+
+/* --- Panel Lateral --- */
+#side-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 300px;
+    max-width: 80%;
+    background-color: #FFF4DE;
+    border-left: 1px solid rgba(148, 171, 61, 0.2);
+    box-shadow: -3px 0 15px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+#side-panel.open {
+    transform: translateX(0%);
+}
+
+#side-panel .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(148, 171, 61, 0.2);
+    flex-shrink: 0;
+}
+
+#side-panel .panel-header h2 {
+    margin: 0;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #4A3112;
+}
+
+/* --- Botón Cerrar Panel --- */
+#close-panel-btn {
+    color: #FA77C5;
+    font-size: 1.4em;
+    background-color: #FFFFFF;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    /* Hereda tamaño, etc de .button-panel */
+}
+
+#close-panel-btn:hover {
+    background-color: #fce4ec;
+    color: #e057a8;
+}
+
+#close-panel-btn .panel-bar-middle {
+    display: none;
+}
+
+/* --- Contenido Panel Lateral --- */
+#side-panel .panel-content {
+    padding: 20px;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.panel-button {
+    display: block;
+    width: 100%;
+    background-color: #FFFFFF;
+    color: #4A3112;
+    border: 1px solid #EADCA6;
+    padding: 12px 15px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.2s ease;
+    margin-bottom: 15px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+.panel-button:hover {
+    background-color: #FDF9E0;
+}
+
+.panel-button:last-child {
+    margin-bottom: 0;
+}
+
+/* Estilo para secciones de contenido del panel */
+.panel-section-content {
+    display: none;
+    margin-top: 10px;
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: none;
+    border-top: none;
+}
+
+.panel-section-content h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #94AB3D;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+/* --- Estilos Glosario --- */
+.glossary-index {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+}
+
+.glossary-index a {
+    font-family: 'Fredoka', 'Comic Sans MS', sans-serif;
+    font-weight: bold;
+    font-size: 1em;
+    min-width: auto;
+    padding: 3px 6px;
+    border: 1px solid #D3D9C1;
+    background-color: transparent;
+    color: #94AB3D;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    margin: 0 2px;
+    text-decoration: none;
+}
+
+.glossary-index a:hover {
+    background-color: #F0F5D4;
+    color: #7a8e31;
+    border-color: #c0c7a6;
+    text-decoration: underline;
+}
+
+.glossary-letter-heading {
+    font-size: 1.2em;
+    color: #4A3112;
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+    margin-bottom: 2px;
+}
+
+.glossary-letter-heading:first-of-type {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+}
+
+.panel-section-content dl dt {
+    font-weight: bold;
+    color: #94AB3D;
+    margin-top: 5px;
+    margin-bottom: 2px;
+}
+
+.panel-section-content dl dd {
+    margin-left: 0;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    border-left: 2px solid #F5E187;
+    text-align: justify;
+}
+
+#glossary-content h4+p {
+    margin-top: 5px;
+}
+
+#glossary-content p {
+    text-align: justify;
+    margin-bottom: 10px;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+#glossary-content p:last-of-type {
+    margin-bottom: 0;
+}
+
+/* --- FIN ESTILOS GLOSARIO --- */
+
+/* --- ESTILOS ESTADÍSTICAS --- */
+.stats-container {
+    padding: 10px 0;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    gap: 10px;
+}
+
+.stat-label {
+    width: 80px;
+    font-size: 0.9em;
+    color: #4A3112;
+    text-align: right;
+    flex-shrink: 0;
+    font-weight: bold;
+}
+
+.stat-bar-track {
+    flex-grow: 1;
+    height: 20px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #EADCA6;
+}
+
+.stat-bar-fill {
+    height: 100%;
+    width: 0%;
+    background-color: #ccc;
+    border-radius: 10px;
+    transition: width 0.6s ease-out;
+    text-align: right;
+    color: white;
+    font-size: 0.8em;
+    line-height: 20px;
+    padding-right: 5px;
+    box-sizing: border-box;
+}
+
+/* --- FIN ESTILOS ESTADÍSTICAS --- */
+
+/* --- ESTILOS SECCIÓN AJUSTES --- */
+.setting-item {
+    margin-bottom: 20px;
+}
+
+.setting-item label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #4A3112;
+}
+
+.settings-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #EADCA6;
+    border-radius: 15px;
+    font-family: inherit;
+    font-size: 0.95em;
+    color: #4A3112;
+    box-sizing: border-box;
+}
+
+.settings-input:focus {
+    outline: none;
+    border-color: #94AB3D;
+    box-shadow: 0 0 3px rgba(148, 171, 61, 0.3);
+}
+
+.setting-item small {
+    display: block;
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 4px;
+}
+
+.avatar-setting-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#settings-avatar-preview {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+#settings-avatar-url-input {
+    flex-grow: 1;
+}
+
+#settings-save-btn {
+    background-color: #94AB3D;
+    color: white;
+    border: none;
+}
+
+#settings-save-btn:hover {
+    background-color: #7a8e31;
+}
+
+#settings-feedback {
+    color: green;
+    text-align: center;
+    margin-top: 10px;
+    display: none;
+    font-weight: bold;
+}
+
+/* --- FIN ESTILOS AJUSTES --- */
+
+
+/* --- Quitar colas de las burbujas --- */
+.message.received .message-bubble::before,
+.message.sent .message-bubble::before {
+    display: none;
+}
+
+/* --- Estilo Placeholder Input --- */
+.text-input::placeholder {
+    color: #4A3112;
+    opacity: 0.6;
+}
+
+/* --- Estilos Barra de Scroll (Chat y Panel) --- */
+.chat-messages::-webkit-scrollbar,
+#side-panel .panel-content::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.chat-messages::-webkit-scrollbar-track,
+#side-panel .panel-content::-webkit-scrollbar-track {
+    background: rgba(148, 171, 61, 0.1);
+    border-radius: 4px;
+    /* margin: 5px 0; */
+    /* Quitado margen que puede afectar al panel */
+}
+
+.chat-messages::-webkit-scrollbar-thumb,
+#side-panel .panel-content::-webkit-scrollbar-thumb {
+    background-color: #94AB3D;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 244, 222, 0.5);
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover,
+#side-panel .panel-content::-webkit-scrollbar-thumb:hover {
+    background-color: #7a8e31;
+}
+
+/* Estilos Firefox (Combinados) */
+.chat-messages,
+#side-panel .panel-content {
+    scrollbar-width: auto;
+    /* O 'thin' si prefieres */
+    scrollbar-color: #94AB3D rgba(148, 171, 61, 0.1);
+}
+
+
+/* === ESTILOS PANTALLA NICKNAME === */
+#nickname-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #FFF4DE;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2000;
+}
+
+#nickname-screen h2 {
+    color: #4A3112;
+    margin-bottom: 10px;
+}
+
+#nickname-screen p {
+    color: #4A3112;
+    margin-bottom: 20px;
+    max-width: 400px;
+}
+
+.nickname-input-area {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+#nickname-input {
+    padding: 10px 15px;
+    border: 1px solid #EADCA6;
+    border-radius: 20px;
+    font-family: inherit;
+    font-size: 1em;
+    outline: none;
+    color: #4A3112;
+    min-width: 200px;
+    box-sizing: border-box;
+}
+
+#nickname-submit {
+    padding: 10px 20px;
+    background-color: #94AB3D;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 20px;
+    font-family: inherit;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#nickname-submit:hover {
+    background-color: #7a8e31;
+}
+
+.error-message {
+    font-size: 0.9em;
+    margin-top: 5px;
+    min-height: 1.2em;
+    display: block;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* --- Estilo Nickname en Cabecera --- */
+#header-nickname {
+    color: #4A3112;
+    font-weight: bold;
+    font-size: 1.1em;
+    text-align: center;
+    flex-grow: 1;
+    margin: 0 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* --- ESTILO NUEVO BOTÓN SALIR (Ya estaba aquí) --- */
+.logout-button {
+    background-color: #ee4d4d;
+    /* Rojo más claro */
+    border: 1px solid #d32f2f;
+    /* Borde rojo oscuro */
+    color: white;
+}
+
+.logout-button:hover {
+    background-color: #d32f2f;
+    /* Rojo oscuro hover */
+    border-color: #c62828;
+}
+
+/* --- FIN ESTILO BOTÓN SALIR --- */

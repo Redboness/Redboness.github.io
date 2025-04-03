@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pimpoyo Chatbot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="nickname-screen">
+        <h2>¡Bienvenido/a a Pimpoyo!</h2>
+        <p>Por favor, introduce un nickname para empezar:</p>
+        <div class="nickname-input-area">
+             <input type="text" id="nickname-input" placeholder="Escribe tu nickname..." maxlength="20">
+             <button id="nickname-submit">Entrar al Chat</button>
+        </div>
+        <p id="nickname-error" class="error-message" style="display: none; color: red;"></p>
+    </div>
+
+    <div class="chat-container hidden">
+
+        <header class="chat-header">
+            <button class="button-refresh" aria-label="Volver al principio">
+                <i class="fa-solid fa-rotate-right"></i>
+            </button>
+            <span id="header-nickname"></span>
+            <button class="button-panel" aria-label="Abrir panel">
+                <span class="panel-bar-middle"></span>
+            </button>
+        </header>
+
+        <main class="chat-messages">
+            </main>
+
+        <footer class="chat-input-area">
+            <input type="text" class="text-input" placeholder="Comienza a escribir...">
+            <button class="send-button" aria-label="Enviar mensaje">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </footer>
+
+        <div id="side-panel">
+            <div class="panel-header">
+                <h2>PANEL</h2>
+                <button id="close-panel-btn" class="button-panel" aria-label="Cerrar panel">
+                    <i class="fa-solid fa-x"></i>
+                </button>
+            </div>
+            <div class="panel-content">
+                <button id="btn-glossary" class="panel-button">GLOSARIO</button>
+                <button id="btn-stats" class="panel-button">ESTADÍSTICAS</button>
+                <button id="btn-settings" class="panel-button">AJUSTES</button>
+
+                <div id="glossary-content" class="panel-section-content" style="display: none;">
+                    <h3>Glosario</h3>
+                     <div class="glossary-index">
+                         <a href="#glossary-A">A</a> <a href="#glossary-B">B</a>
+                         <a href="#glossary-C">C</a> <a href="#glossary-D">D</a>
+                         <a href="#glossary-E">E</a> <a href="#glossary-F">F</a>
+                         <a href="#glossary-G">G</a> <a href="#glossary-H">H</a>
+                         <a href="#glossary-I">I</a> <a href="#glossary-J">J</a>
+                         <a href="#glossary-K">K</a> <a href="#glossary-L">L</a>
+                         <a href="#glossary-M">M</a> <a href="#glossary-N">N</a>
+                         <a href="#glossary-O">O</a> <a href="#glossary-P">P</a>
+                         <a href="#glossary-Q">Q</a> <a href="#glossary-R">R</a>
+                         <a href="#glossary-S">S</a> <a href="#glossary-T">T</a>
+                         <a href="#glossary-U">U</a> <a href="#glossary-V">V</a>
+                         <a href="#glossary-W">W</a> <a href="#glossary-X">X</a>
+                         <a href="#glossary-Y">Y</a> <a href="#glossary-Z">Z</a>
+                     </div>
+                     <hr style="margin: 15px 0; border: none; border-top: 1px solid #eee;">
+                     <dl>
+                         <h4 id="glossary-A" class="glossary-letter-heading">A</h4>
+                         <dt>Algoritmo</dt>
+                         <dd>Conjunto ordenado de operaciones sistemáticas que permite hacer un cálculo y hallar la solución de un tipo de problemas.</dd>
+                     </dl>
+                     <h4 id="glossary-B" class="glossary-letter-heading">B</h4>
+                     <dl>
+                         <dt>Bulo</dt>
+                         <dd>Noticia falsa propagada con algún fin.</dd>
+                     </dl>
+                     <h4 id="glossary-C" class="glossary-letter-heading">C</h4>
+                     <dl>
+                         <dt>Clickbait</dt>
+                         <dd>Título o miniatura llamativa que busca generar clics a toda costa, a menudo con contenido engañoso.</dd>
+                     </dl>
+                      <h4 id="glossary-D" class="glossary-letter-heading">D</h4>
+                      <dl>
+                         <dt>Deepfake</dt>
+                         <dd>Video o audio manipulado usando inteligencia artificial para hacer que alguien parezca decir o hacer algo que no hizo.</dd>
+                      </dl>
+                      <h4 id="glossary-F" class="glossary-letter-heading">F</h4>
+                      <dl>
+                         <dt>Fake News</dt>
+                         <dd>Noticia falsa o bulo difundido con intención de engañar.</dd>
+                      </dl>
+                </div>
+
+                <div id="stats-content" class="panel-section-content" style="display: none;">
+                     <h3>Estadísticas</h3>
+                      <div class="stats-container">
+                         <div class="stat-item">
+                             <span class="stat-label">Veracidad</span> <div class="stat-bar-track">
+                                  <div class="stat-bar-fill" id="stat-bar-veracidad" style="width: 0%; background-color: #A0522D;"></div>
+                             </div>
+                         </div>
+                         <div class="stat-item">
+                             <span class="stat-label">Fuentes</span> <div class="stat-bar-track">
+                                 <div class="stat-bar-fill" id="stat-bar-fuentes" style="width: 0%; background-color: #FA77C5;"></div>
+                             </div>
+                         </div>
+                         <div class="stat-item">
+                             <span class="stat-label">Actualidad</span> <div class="stat-bar-track">
+                                 <div class="stat-bar-fill" id="stat-bar-actualidad" style="width: 0%; background-color: #94AB3D;"></div>
+                             </div>
+                         </div>
+                     </div>
+                     <p style="text-align: center; margin-top: 20px; font-size: 0.9em; color: #666;">
+                         (Estadísticas por temática - aún por definir)
+                     </p>
+                </div>
+
+                 <div id="settings-content" class="panel-section-content" style="display: none;">
+                     <h3>Ajustes</h3>
+                     <div class="setting-item">
+                         <label for="settings-nickname-input">Nickname:</label>
+                         <input type="text" id="settings-nickname-input" class="settings-input" placeholder="Tu nickname..." maxlength="20">
+                         <small>Este es el nombre que se muestra en el chat.</small>
+                     </div>
+                     <div class="setting-item">
+                         <label for="settings-avatar-url-input">URL del Avatar:</label>
+                         <div class="avatar-setting-input">
+                             <img id="settings-avatar-preview" src="" alt="Avatar actual" class="avatar">
+                             <input type="url" id="settings-avatar-url-input" class="settings-input" placeholder="Pega la URL de tu imagen aquí...">
+                         </div>
+                          <small>Pega un enlace directo (URL) a una imagen online (ej: de Postimages, Imgur).</small>
+                     </div>
+                     <button id="settings-save-btn" class="panel-button" style="margin-top: 20px;">Guardar Cambios</button>
+                     <p id="settings-feedback" style="color: green; text-align: center; margin-top: 10px; display: none; font-weight: bold;"></p>
+
+                     <hr style="margin: 25px 0 15px 0; border: none; border-top: 1px solid #eee;">
+                     <button id="settings-logout-btn" class="panel-button logout-button">Salir del Chat</button>
+                     </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
