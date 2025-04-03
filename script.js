@@ -28,6 +28,7 @@ const settingsAvatarUrlInput = document.getElementById('settings-avatar-url-inpu
 const settingsAvatarPreview = document.getElementById('settings-avatar-preview');
 const settingsSaveButton = document.getElementById('settings-save-btn');
 const settingsFeedback = document.getElementById('settings-feedback');
+const settingsLogout = document.getElementById('settings-logout-btn')
 // --- FIN AÑADIDO ---
 
 // --- Botones iniciales ---
@@ -608,4 +609,11 @@ document.addEventListener('DOMContentLoaded', () => {
         chatContainerElem.classList.add('hidden');
     }
 });
+
+settingsLogout.onclick = () => {
+    localStorage.removeItem('pimpoyoUserNickname');
+    location.reload();
+}
+
+
 // --- FIN MODIFICACIÓN ---
