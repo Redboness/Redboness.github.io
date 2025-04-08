@@ -1,7 +1,7 @@
 /* --- Fuente principal Fredoka --- */
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
 
-/* --- Estilos Generales --- */
+/* --- Estilos generales --- */
 body {
     margin: 0;
     font-family: 'Fredoka', 'Comic Sans MS', sans-serif;
@@ -9,7 +9,7 @@ body {
     line-height: 1.4;
 }
 
-/* --- Contenedor Principal del Chat --- */
+/* --- Contenedor principal del chat --- */
 .chat-container {
     background-color: #FFF4DE;
     width: 100%;
@@ -92,7 +92,7 @@ body {
     transform: translate(-50%, -50%);
 }
 
-/* --- Área de Mensajes --- */
+/* --- Área de mensajes --- */
 .chat-messages {
     flex-grow: 1;
     overflow-y: auto;
@@ -101,7 +101,7 @@ body {
     flex-direction: column;
 }
 
-/* --- Estilos Base Mensaje --- */
+/* --- Estilos base del mensaje --- */
 .message {
     display: flex;
     align-items: flex-end;
@@ -121,12 +121,10 @@ body {
     flex-shrink: 0;
     background-color: #eee;
     border: none;
-    /* Borde quitado como solicitaste */
     object-fit: cover;
-    /* Ajuste imagen */
 }
 
-/* Burbuja Amarilla (Bot) */
+/* Burbuja Amarilla (Bot.ia) */
 .message.received {
     align-self: flex-start;
 }
@@ -169,7 +167,7 @@ body {
     box-shadow: none;
 }
 
-/* Contenido Párrafos */
+/* Contenido párrafos */
 .message-bubble p {
     margin: 0 0 10px 0;
     line-height: 1.4;
@@ -179,7 +177,7 @@ body {
     margin-bottom: 0;
 }
 
-/* --- Botones en Burbujas --- */
+/* --- Botones en burbujas --- */
 .message-buttons,
 .navigation-buttons {
     display: flex;
@@ -196,7 +194,7 @@ body {
     gap: 10px;
 }
 
-/* Estilo Botón Blanco (para Bot y para diseño en User) */
+/* --- Estilo botón blanco (para Bot y para diseño en User) --- */
 .message-buttons button,
 .message.received .message-bubble .btn-action,
 .message.sent .message-bubble .choice-button {
@@ -213,7 +211,7 @@ body {
     box-shadow: 0 1px 3px rgba(74, 49, 18, 0.1);
 }
 
-/* Estilos específicos para botones FUNCIONALES (los del Bot) */
+/* --- Estilos específicos para botones funcionales (los del bot) --- */
 .message-buttons button,
 .message.received .message-bubble .btn-action {
     cursor: pointer;
@@ -227,14 +225,13 @@ body {
     box-shadow: 0 2px 5px rgba(74, 49, 18, 0.15);
 }
 
-/* Estilos específicos para botón de DISEÑO (dentro burbuja User) */
+/* --- Estilos específicos para botón de diseño (dentro de la burbuja User) --- */
 .message.sent .message-bubble .choice-button {
     cursor: default;
     box-shadow: none;
 }
 
-
-/* --- Área de Input --- */
+/* --- Área de input --- */
 .chat-input-area {
     display: flex;
     align-items: center;
@@ -282,7 +279,7 @@ body {
     background-color: #f750b6;
 }
 
-/* --- Botones Navegación Tips (con Font Awesome) --- */
+/* --- Flechas de navegación de tips (con Font Awesome) --- */
 .btn-nav {
     display: inline-flex;
     align-items: center;
@@ -312,8 +309,7 @@ body {
     opacity: 0.5;
 }
 
-
-/* --- Panel Lateral --- */
+/* --- Panel lateral --- */
 #side-panel {
     position: fixed;
     top: 0;
@@ -353,7 +349,7 @@ body {
     color: #4A3112;
 }
 
-/* --- Botón Cerrar Panel --- */
+/* --- Botón cerrar panel --- */
 #close-panel-btn {
     color: #FA77C5;
     font-size: 1.4em;
@@ -361,7 +357,6 @@ body {
     border: none;
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease;
-    /* Hereda tamaño, etc de .button-panel */
 }
 
 #close-panel-btn:hover {
@@ -406,7 +401,7 @@ body {
     margin-bottom: 0;
 }
 
-/* Estilo para secciones de contenido del panel */
+/* --- Estilo para secciones de contenido del panel --- */
 .panel-section-content {
     display: none;
     margin-top: 10px;
@@ -503,9 +498,8 @@ body {
     margin-bottom: 0;
 }
 
-/* --- FIN ESTILOS GLOSARIO --- */
 
-/* --- ESTILOS ESTADÍSTICAS --- */
+/* --- Estilos de estadística --- */
 .stats-container {
     padding: 10px 0;
 }
@@ -549,9 +543,7 @@ body {
     box-sizing: border-box;
 }
 
-/* --- FIN ESTILOS ESTADÍSTICAS --- */
-
-/* --- ESTILOS SECCIÓN AJUSTES --- */
+/* --- Estilos de ajustes --- */
 .setting-item {
     margin-bottom: 20px;
 }
@@ -623,22 +615,19 @@ body {
     font-weight: bold;
 }
 
-/* --- FIN ESTILOS AJUSTES --- */
-
-
 /* --- Quitar colas de las burbujas --- */
 .message.received .message-bubble::before,
 .message.sent .message-bubble::before {
     display: none;
 }
 
-/* --- Estilo Placeholder Input --- */
+/* --- Estilo placeholder input --- */
 .text-input::placeholder {
     color: #4A3112;
     opacity: 0.6;
 }
 
-/* --- Estilos Barra de Scroll (Chat y Panel) --- */
+/* --- Estilos barra de scroll (Chat y Panel) --- */
 .chat-messages::-webkit-scrollbar,
 #side-panel .panel-content::-webkit-scrollbar {
     width: 8px;
@@ -650,7 +639,6 @@ body {
     background: rgba(148, 171, 61, 0.1);
     border-radius: 4px;
     /* margin: 5px 0; */
-    /* Quitado margen que puede afectar al panel */
 }
 
 .chat-messages::-webkit-scrollbar-thumb,
@@ -665,7 +653,7 @@ body {
     background-color: #7a8e31;
 }
 
-/* Estilos Firefox (Combinados) */
+/* Estilos firefox (combinados) */
 .chat-messages,
 #side-panel .panel-content {
     scrollbar-width: auto;
@@ -674,7 +662,7 @@ body {
 }
 
 
-/* === ESTILOS PANTALLA NICKNAME === */
+/* --- estilos de pantalla nickame --- */
 #nickname-screen {
     display: flex;
     flex-direction: column;
@@ -752,7 +740,7 @@ body {
     display: none !important;
 }
 
-/* --- Estilo Nickname en Cabecera --- */
+/* --- Estilo nickname en la cabecera principal --- */
 #header-nickname {
     color: #4A3112;
     font-weight: bold;
@@ -765,12 +753,10 @@ body {
     text-overflow: ellipsis;
 }
 
-/* --- ESTILO NUEVO BOTÓN SALIR (Ya estaba aquí) --- */
+/* --- Estilo nuevo del botón de salir --- */
 .logout-button {
     background-color: #ee4d4d;
-    /* Rojo más claro */
     border: 1px solid #d32f2f;
-    /* Borde rojo oscuro */
     color: white;
 }
 
@@ -779,5 +765,3 @@ body {
     /* Rojo oscuro hover */
     border-color: #c62828;
 }
-
-/* --- FIN ESTILO BOTÓN SALIR --- */
