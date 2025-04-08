@@ -1,17 +1,17 @@
-// --- Selección de Elementos del DOM ---
+// --- Selección de elementos del DOM ---
 const chatMessages = document.querySelector('.chat-messages');
 const buttonRefresh = document.querySelector('.button-refresh');
 const textInput = document.querySelector('.text-input');
 const sendButton = document.querySelector('.send-button');
 
-// Panel Lateral
+// Panel lateral ---
 const sidePanel = document.getElementById('side-panel');
 const openPanelButton = document.querySelector('.chat-header .button-panel:not(#close-panel-btn)'); // Selector específico
 const closePanelButton = document.getElementById('close-panel-btn');
 const panelContent = document.querySelector('#side-panel .panel-content');
 const panelSectionContents = document.querySelectorAll('.panel-section-content');
 
-// --- Selectores Pantalla Nickname y Contenedor Chat ---
+// --- Selectores pantalla nickname y contenedor del chat ---
 const nicknameScreen = document.getElementById('nickname-screen');
 const nicknameInput = document.getElementById('nickname-input');
 const nicknameSubmitButton = document.getElementById('nickname-submit');
@@ -22,14 +22,13 @@ const chatContainer = document.querySelector('.chat-container');
 const headerNicknameSpan = document.getElementById('header-nickname');
 // console.log('DEBUG: Elemento Span Cabecera encontrado:', headerNicknameSpan); // Opcional
 
-// --- Selectores Panel Ajustes (AÑADIDO) ---
+// --- Selectores panel ajustes ---
 const settingsNicknameInput = document.getElementById('settings-nickname-input');
 const settingsAvatarUrlInput = document.getElementById('settings-avatar-url-input');
 const settingsAvatarPreview = document.getElementById('settings-avatar-preview');
 const settingsSaveButton = document.getElementById('settings-save-btn');
 const settingsFeedback = document.getElementById('settings-feedback');
 const settingsLogout = document.getElementById('settings-logout-btn')
-// --- FIN AÑADIDO ---
 
 // --- Botones iniciales ---
 let tipsButton = null;
@@ -48,7 +47,6 @@ const tips = [
 let userNickname = null;
 
 // --- Funciones ---
-
 function createInitialMessageHtml() {
     let welcomeText = userNickname
         ? `¡Encantado de conocerte, ${userNickname}! Soy Pimpoyo.`
@@ -112,8 +110,7 @@ function addUserTextMessage(textContent) {
     else { console.error("Error: chatMessages no encontrado al añadir mensaje de texto de usuario."); }
 }
 
-// --- Lógica de Tips ---
-
+// --- Lógica de tips ---
 function createTipCarouselBubble() {
     const messageElement = document.createElement('div');
     messageElement.classList.add('message', 'received', 'tip-carousel-message');
@@ -217,7 +214,7 @@ function askRepeatTips() {
     addBotMessage(askHtml);
 }
 
-// --- Otras Funciones ---
+// --- Otras funciones ---
 function startNewsFlow() {
     console.log('Iniciando flujo de Noticias Falsas');
     const initialMsg = document.getElementById('initial-message');
@@ -246,8 +243,8 @@ function handleInitialChoice(event) {
 function offerNextStepGeneral() {
     const offerHtml = `<p>De acuerdo. ¿Hay algo más en lo que te pueda ayudar?</p>
                      <div class="message-buttons">
-                         <button id="btn-tips-again" class="btn-action">Ver Tips</button>
-                         <button id="btn-news-again" class="btn-action">Descifrar Noticias Falsas</button>
+                         <button id="btn-tips-again" class="btn-action">Ver tips</button>
+                         <button id="btn-news-again" class="btn-action">Descifrar noticias falsas</button>
                          <button id="btn-talk" class="btn-action">Sólo charlar</button>
                      </div>`;
     addBotMessage(offerHtml);
@@ -286,7 +283,7 @@ function resetChat() {
 function openSidePanel() { if (sidePanel) { sidePanel.classList.add('open'); } else { console.error("Elemento #side-panel no encontrado"); } }
 function closeSidePanel() { if (sidePanel) { sidePanel.classList.remove('open'); panelSectionContents.forEach(content => { content.style.display = 'none'; }); } else { console.error("Elemento #side-panel no encontrado"); } }
 
-// --- Función para manejar clics en el panel (MODIFICADA) ---
+// --- Función para manejar clics en el panel ---
 function handlePanelClicks(event) {
     const target = event.target;
     const panelButton = target.closest('.panel-button'); // Botones Glosario, Stats, Ajustes
@@ -302,13 +299,12 @@ function handlePanelClicks(event) {
             targetContent.style.display = 'block'; // Muestra el correcto
             if (panelContent) panelContent.scrollTop = 0; // Reinicia scroll
 
-            // --- LLAMADAS A FUNCIONES ESPECIALES AL ABRIR SECCIÓN ---
+            // --- llamadas a funciones especiales abrir función ---
             if (targetContentId === 'stats-content') {
                 displayStats(); // Actualiza barras de stats
             } else if (targetContentId === 'settings-content') {
                 loadSettings(); // Carga ajustes actuales en los inputs
             }
-            // --- FIN LLAMADAS ---
 
             console.log("Mostrando contenido:", targetContentId);
         } else {
@@ -316,22 +312,20 @@ function handlePanelClicks(event) {
         }
         return; // Detiene aquí
     }
-    // Si se hace clic en otra cosa dentro del panel (ej: enlaces del índice), no hace nada especial aquí
 }
-// --- FIN handlePanelClicks ---
 
-// --- Función para estadísticas (CON DATOS DE EJEMPLO) ---
+// --- Función para estadísticas (Con datos de ejemplo) ---
 function displayStats() {
     console.log("Mostrando/Actualizando estadísticas...");
     const userStats = {
-        veracidad: 75,
-        fuentes: 90,
-        actualidad: 30
+        Veracidad: 70,
+        Fuentes: 50,
+        Actualidad: 30
     };
     const getColorForStat = (statName, percentage) => {
         if (percentage < 40) return '#E57373';
         if (percentage < 70) return '#FFB74D';
-        const defaultColors = { veracidad: '#A0522D', fuentes: '#FA77C5', actualidad: '#94AB3D' };
+        const defaultColors = { Veracidad: '#A0522D', Fuentes: '#FA77C5', Actualidad: '#94AB3D' };
         return defaultColors[statName] || '#4DB6AC';
     }
     for (const statName in userStats) {
@@ -344,9 +338,8 @@ function displayStats() {
         } else { console.warn(`Elemento de barra no encontrado con ID: ${barId}`); }
     }
 }
-// --- FIN displayStats ---
 
-// --- Funciones para Cargar y Guardar Ajustes (AÑADIDAS) ---
+// --- Funciones para cargar y guardar en ajustes ---
 function loadSettings() {
     console.log("Cargando ajustes...");
     // Comprueba si los elementos existen antes de usarlos
@@ -354,7 +347,8 @@ function loadSettings() {
         console.error("Error: Faltan elementos del DOM en loadSettings.");
         return;
     }
-    // Carga desde las variables globales (que se cargan desde localStorage al inicio)
+    
+// Carga desde las variables globales (que se cargan desde localStorage al inicio)
     settingsNicknameInput.value = userNickname || '';
     settingsAvatarUrlInput.value = userAvatarUrl || '';
     // Muestra el avatar actual o uno por defecto si no hay URL válida o está vacía
@@ -418,8 +412,6 @@ function saveSettings() {
     console.log("Ajustes guardados y UI actualizada.");
     // Nota: Los avatares antiguos en el chat no se actualizan aquí.
 }
-// --- FIN Funciones Ajustes ---
-
 
 function sendMessage() {
     if (!textInput) return;
@@ -440,7 +432,7 @@ function sendMessage() {
     }
 }
 
-// --- Lógica Nickname ---
+// --- Lógica de nickname ---
 function handleNicknameSubmit() {
     if (!nicknameInput || !nicknameScreen || !chatContainer || !nicknameError || !headerNicknameSpan) {
         console.error("Error Crítico: Faltan elementos del DOM esenciales para handleNicknameSubmit.");
@@ -462,7 +454,7 @@ function handleNicknameSubmit() {
     userNickname = nickname; // Establece nickname global
     console.log("Nickname guardado en variable:", userNickname);
 
-    // Establece avatar por defecto al registrar nickname nuevo (si no se cargó de localStorage)
+// Establece avatar por defecto al registrar nickname nuevo (si no se cargó de localStorage)
     if (!localStorage.getItem('pimpoyoUserAvatarUrl')) {
         userAvatarUrl = 'https://i.postimg.cc/SQwcn892/Ni-o-avatar-copy.png';
         localStorage.setItem('pimpoyoUserAvatarUrl', userAvatarUrl); // Guarda el por defecto
@@ -481,7 +473,6 @@ function handleNicknameSubmit() {
 }
 
 // --- Event Listeners ---
-
 // Listener principal delegado para burbujas de mensajes
 if (chatMessages) {
     chatMessages.addEventListener('click', function (event) {
@@ -489,12 +480,12 @@ if (chatMessages) {
         const buttonTarget = target.closest('button');
         if (!buttonTarget) return;
 
-        // Botones DENTRO del carrusel de Tips
+        // Botones dentro del carrusel de Tips
         if (buttonTarget.matches('.btn-next-tip')) { handleNextTipClick({ currentTarget: buttonTarget }); return; }
         if (buttonTarget.matches('.btn-prev-tip')) { handlePreviousTipClick({ currentTarget: buttonTarget }); return; }
         if (buttonTarget.matches('.btn-understood-tips')) { handleUnderstoodTipsClick({ currentTarget: buttonTarget }); return; }
 
-        // Botones para repetir Tips
+        // Botones para repetir tips
         if (buttonTarget.matches('#btn-repeat-tips-yes')) {
             addUserMessage(buttonTarget.textContent);
             setTimeout(startTipsFlow, 500);
@@ -548,14 +539,13 @@ if (panelContent) {
     console.error("Error Crítico: Contenedor de contenido del panel no encontrado (#side-panel .panel-content).");
 }
 
-// Listener para botón GUARDAR AJUSTES (AÑADIDO)
+// Listener para botón guardar ajustes ---
 if (settingsSaveButton) {
     settingsSaveButton.addEventListener('click', saveSettings);
 } else {
     // Este error solo aparecería si el HTML de ajustes no se ha añadido correctamente
     console.error("Error Crítico: No se encontró el botón #settings-save-btn.");
 }
-// FIN AÑADIDO
 
 if (sendButton) { sendButton.addEventListener('click', sendMessage); }
 else { console.error("Error Crítico: No se encontró el botón de enviar (.send-button)."); }
@@ -563,20 +553,18 @@ else { console.error("Error Crítico: No se encontró el botón de enviar (.send
 if (textInput) { textInput.addEventListener('keydown', function (event) { if ((event.key === 'Enter' || event.keyCode === 13) && !event.shiftKey) { event.preventDefault(); sendMessage(); } }); }
 else { console.error("Error Crítico: No se encontró el input de texto (.text-input)."); }
 
-// Listeners para pantalla de Nickname
+// Listeners para pantalla de Nickname ---
 if (nicknameSubmitButton) { nicknameSubmitButton.addEventListener('click', handleNicknameSubmit); }
 else { console.error("Error Crítico: No se encontró el botón #nickname-submit."); }
 
 if (nicknameInput) { nicknameInput.addEventListener('keydown', function (event) { if (event.key === 'Enter' || event.keyCode === 13) { event.preventDefault(); handleNicknameSubmit(); } }); }
 
 
-// --- Lógica de Inicialización Principal (MODIFICADA para cargar Avatar URL) ---
+// --- Lógica de inicialización principal (modificada para cargar Avatar URL) ---
 document.addEventListener('DOMContentLoaded', () => {
     const localHeaderNicknameSpan = document.getElementById('header-nickname');
     const storedNickname = localStorage.getItem('pimpoyoUserNickname');
-    // --- AÑADIDO: Cargar también URL de Avatar ---
     const storedAvatarUrl = localStorage.getItem('pimpoyoUserAvatarUrl');
-    // --- FIN AÑADIDO ---
     const nicknameScreenElem = document.getElementById('nickname-screen');
     const chatContainerElem = document.querySelector('.chat-container');
 
@@ -593,7 +581,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // --- AÑADIDO: Asignar URL de Avatar si existe, si no, usa el placeholder ---
         userAvatarUrl = storedAvatarUrl || 'https://i.postimg.cc/SQwcn892/Ni-o-avatar-copy.png';
         console.log("Avatar URL recuperada:", userAvatarUrl);
-        // --- FIN AÑADIDO ---
 
         localHeaderNicknameSpan.textContent = userNickname; // Actualiza header
 
@@ -614,6 +601,3 @@ settingsLogout.onclick = () => {
     localStorage.removeItem('pimpoyoUserNickname');
     location.reload();
 }
-
-
-// --- FIN MODIFICACIÓN ---
